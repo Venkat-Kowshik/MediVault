@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./script.js" defer></script>
+</head>
+<body>
+    <form onsubmit="handleSubmit(); return false;">
+        <p>Upload File</p>
+        <input type="file" id="pdfFile">
+        <input type="submit" value="Upload">
+    </form>
+    <button type="button" onclick="downloadpdf()">Download pdf</button>
+    <button id="view-pdf-btn" onclick="viewpdf('Z390.pdf')">View PDF</button>
+    <button onclick="getFileList()">File list</button>
+    <div id="file-list-container"></div>
+    <div id="pdf-container"></div>
+</body>
+</html>

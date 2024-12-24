@@ -1,0 +1,132 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+  
+  }
+  
+#root {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+  
+  }
+  
+
+
+  #root2 {
+    margin: 0px;
+    padding: 0px;
+    background-color: #1f252f;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    overflow-x: hidden;
+    grid-template-columns: 230px 1fr;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  .sidebar {
+    padding: 10px;
+    position: relative;
+    background-color: #2020cb;
+    color: white;
+    grid-column: 1/2;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .viewer {
+    overflow-x: hidden;
+    background-color: white;
+    justify-content: center;
+    position: relative;
+    display: grid;
+    padding: 28px 30px 10px 30px;
+    grid-row-gap: 15px;
+  }
+  
+  #heading {
+    font-size: 2.7em;
+    font-family: helvetica;
+    margin-bottom: 20px;
+  }
+  
+  hr {
+    width: 90%;
+    border-width: 0px;
+    height: 2px;
+    background-color: white;
+    border-radius: 1px;
+  }
+  
+  .side-btn {
+    padding: 10px;
+    position: relative;
+    font-family: Helvetica;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  .side-btn:hover {
+    background-color: rgba(255, 255, 255, 0.114);
+  }
+  .side-btn.active {
+    background-color: #79b3bb;    
+  }
+  
+  
+  .blocking-modal {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: #383b418d;
+    z-index: 2;
+  }
+  
+  .project-form {
+    display: flex;
+    background-color: #1f252f;
+    transform: scale(1);
+    z-index: 10;
+    color: white;
+    font-family: 'Helvetica';
+    position: fixed;
+    border-radius: 20px;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 150px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -150px;
+    margin-top: -175px;
+    animation: zoom-out 0.1s ease-in-out 1;
+    transition: all 0.2s;
+  }
+  
+  @keyframes zoom-out {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+    100% {
+        opacity: 100;
+        transform: scale(1);
+    }
+  }
+
+  #userbtn {
+    position: fixed;
+    bottom: 30px;
+  }

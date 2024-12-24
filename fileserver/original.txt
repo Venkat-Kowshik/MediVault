@@ -1,0 +1,141 @@
+@app.route("/download",methods=["GET"])
+def download_file():
+    """download file from mongodb"""
+    filename = request.args.get('filename')
+    print(filename)
+    fileobj= db.files.files.find_one({"filename": filename})
+    # for data in fileslist:
+    #     fs_id = data['_id']
+    #     fname=data['filename']
+    #     out_data = fs.get(fs_id).read()
+    #     print("saving file to "+os.path.join(download_loc+fname))
+    #     with open(os.path.join(download_loc+fname), 'wb') as output:
+    #         output.write(out_data)
+    fs_id = fileobj['_id']
+    fname=fileobj['filename']
+    out_data = fs.get(fs_id).read()
+    print("saving file to "+os.path.join(download_loc+fname))
+    with open(os.path.join(download_loc+fname), 'wb') as output:
+        output.write(out_data)
+
+    print("Download Completed!")
+    return send_file(os.path.join(download_loc+"Z390.pdf"), as_attachment=False)
+    # return "<!DOCTYPE html><html><body>hello</body></html>",200
+
+
+
+async function viewpdf(filename) {
+    try {
+        // Fetch the PDF from the Flask server
+        const response = await fetch(`http://127.0.0.1:8000/download?filename=Z390.pdf`,{
+          method: "GET",
+          mode: "no-cors",
+        });
+        
+
+        // Convert the response to a Blob object
+        const blob = await response.blob();
+
+        // Create a URL for the Blob object
+        const pdfUrl = window.URL.createObjectURL(blob);
+
+        // Set the URL as the source of the iframe
+        let ifr=document.createElement('iframe')
+        ifr.style.width='600px';
+        ifr.style.height='700px';
+        const pdfViewer = document.getElementById('pdf-container');
+        ifr.src = pdfUrl;
+        pdfViewer.appendChild(ifr)
+        return false;
+
+    } catch (error) {
+        console.error('Error:', error);  // Log any errors
+    }
+}
+
+
+
+async function viewpdf() {
+    try {
+        // Fetch the PDF from the Flask server
+        const response = await fetch('http://127.0.0.1:8000/download',{
+          method: "GET",
+          mode: "cors",
+        });
+        
+        // Check if the response is OK
+        if (!response.ok) {
+            throw new Error('Failed to fetch PDF');
+        }
+
+        // Convert the response to a Blob object
+        const blob = await response.blob();
+
+        // Create a URL for the Blob object
+        const pdfUrl = window.URL.createObjectURL(blob);
+
+        // Set the URL as the source of the iframe
+        let ifr=document.createElement('iframe')
+        ifr.style.width='600px';
+        ifr.style.height='700px';
+        const pdfViewer = document.getElementById('pdf-container');
+        ifr.src = pdfUrl;
+        pdfViewer.appendChild(ifr)
+        return false;
+
+    } catch (error) {
+        console.error('Error:', error);  // Log any errors
+    }
+}
+
+
+async function getFileList() {
+  try {
+    const response =  await fetch('http://127.0.0.1:8000/filelist');
+    body = await response.json()
+    if(response.ok){
+      console.log(response)
+      console.log(body)
+      let container = document.querySelector('#file-list-container')
+      container.innerHTML=''
+      body.forEach(i => {
+        let p = document.createElement('p')
+        p.textContent=i
+        p.addEventListener('click',()=>{})
+        container.appendChild(p)
+      });
+    }
+    else
+      console.log(response)
+  }
+  catch(error){
+    console.error(error);
+  }
+}
+
+@app.route("/download",methods=["GET"])
+def download_file():
+    """download file from mongodb"""
+    
+    fileslist= db.files.files.find()
+    for data in fileslist:
+        fs_id = data['_id']
+        fname=data['filename']
+        out_data = fs.get(fs_id).read()
+        print("saving file to "+os.path.join(download_loc+fname))
+        with open(os.path.join(download_loc+fname), 'wb') as output:
+            output.write(out_data)
+
+
+    print("Download Completed!")
+    return send_file(os.path.join(download_loc+"Z390.pdf"), as_attachment=False)
+    # return "<!DOCTYPE html><html><body>hello</body></html>",200
+
+@app.route('/filelist',methods=['GET'])
+def getfilelist():
+    files=db.files.files.find()
+    otpt=[]
+    for data in files:
+        otpt.append(data['filename'])
+    
+    return jsonify(otpt),200
